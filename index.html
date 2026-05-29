@@ -1,8 +1,8 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>下周七｜每月固定支出规划</title>
   <style>
     :root {
@@ -481,6 +481,299 @@
       display: none;
     }
 
+
+    /* 下周七风格 · 细节优化 */
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      padding: max(18px, env(safe-area-inset-top)) 12px 30px;
+      background:
+        radial-gradient(circle at 12% 6%, rgba(244, 199, 158, 0.50), transparent 32%),
+        radial-gradient(circle at 88% 4%, rgba(255, 238, 218, 0.86), transparent 34%),
+        radial-gradient(circle at 88% 92%, rgba(224, 201, 180, 0.30), transparent 34%),
+        linear-gradient(135deg, #fbf4eb 0%, #fffaf3 48%, #f3e4d4 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(120, 86, 55, 0.032) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(120, 86, 55, 0.024) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.32), transparent 78%);
+    }
+
+    .page, .hero, .section, .lock-card, .content, .main-list, .side {
+      max-width: 100%;
+    }
+
+    .hero {
+      border-radius: 30px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.76), rgba(255,246,235,0.58));
+      border-color: rgba(176, 145, 113, 0.18);
+    }
+
+    .eyebrow {
+      background: rgba(255,255,255,0.62);
+      border-color: rgba(216,154,104,0.18);
+      font-size: 12px;
+    }
+
+    .summary-card,
+    .section,
+    .bank-box,
+    .deposit-card,
+    .note {
+      background: rgba(255, 255, 255, 0.64);
+      border-color: rgba(176, 145, 113, 0.16);
+    }
+
+    .section {
+      border-radius: 26px;
+      box-shadow: 0 14px 36px rgba(128, 91, 58, 0.09);
+    }
+
+    .section-head {
+      padding: 20px 20px 14px;
+    }
+
+    .items {
+      padding: 6px 14px 14px;
+    }
+
+    .item {
+      padding: 12px 8px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      box-shadow: 0 0 0 4px rgba(216,154,104,0.11);
+    }
+
+    .amount-pill {
+      background: rgba(216, 154, 104, 0.12);
+      border: 1px solid rgba(216, 154, 104, 0.14);
+      font-size: 13px;
+      padding: 8px 12px;
+    }
+
+    .bank-box {
+      margin: 0 20px 20px;
+      border-radius: 20px;
+    }
+
+    button.copy {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      padding: 0;
+      border-radius: 999px;
+      border: 1px solid rgba(141, 98, 67, 0.12);
+      background: rgba(255,255,255,0.38);
+      color: rgba(141, 98, 67, 0.48);
+      box-shadow: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+
+    button.copy::before {
+      content: "";
+      width: 11px;
+      height: 11px;
+      display: block;
+      background: currentColor;
+      opacity: .72;
+      -webkit-mask:
+        linear-gradient(#000 0 0) 4px 4px / 7px 7px no-repeat,
+        linear-gradient(#000 0 0) 0 0 / 7px 7px no-repeat;
+      mask:
+        linear-gradient(#000 0 0) 4px 4px / 7px 7px no-repeat,
+        linear-gradient(#000 0 0) 0 0 / 7px 7px no-repeat;
+    }
+
+    button.copy:hover {
+      background: rgba(255,255,255,0.62);
+      color: rgba(141, 98, 67, 0.66);
+    }
+
+    .bank-number,
+    .deposit-card {
+      min-width: 0;
+    }
+
+    .masked-number {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .deposit-card {
+      padding: 13px 14px;
+    }
+
+    .closing-card p {
+      font-size: 14px;
+      color: rgba(141, 98, 67, 0.88);
+    }
+
+    .footer {
+      color: rgba(61, 53, 46, 0.42);
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 26px;
+      transform: translateX(-50%) translateY(10px);
+      z-index: 10000;
+      padding: 9px 16px;
+      border-radius: 999px;
+      background: rgba(61, 53, 46, 0.82);
+      color: #fffaf4;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: .2s ease;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .lock-screen {
+      padding: 20px 12px;
+      overflow-x: hidden;
+    }
+
+    .lock-card {
+      width: min(390px, calc(100vw - 24px));
+      padding: 28px 22px 24px;
+      border-radius: 30px;
+      text-align: left;
+    }
+
+    .lock-badge {
+      width: 50px;
+      height: 50px;
+      border-radius: 18px;
+    }
+
+    .lock-card h2 {
+      font-size: 24px;
+    }
+
+    .password-row {
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 72px;
+      gap: 10px;
+    }
+
+    .password-input {
+      min-width: 0;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    .unlock-btn {
+      width: 72px;
+      padding: 0;
+      background: linear-gradient(135deg, #d89a68, #b9825f);
+    }
+
+    @media (max-width: 860px) {
+      body { padding: 14px 10px 26px; }
+      .hero { padding: 22px 18px; border-radius: 28px; }
+      h1 { font-size: 30px; letter-spacing: -0.03em; }
+      .summary-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .summary-card {
+        padding: 13px 10px;
+        border-radius: 18px;
+      }
+      .summary-card span {
+        font-size: 11px;
+        margin-bottom: 6px;
+      }
+      .summary-card strong {
+        font-size: 22px;
+      }
+      .content {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 14px;
+      }
+      .section {
+        border-radius: 24px;
+      }
+      .section-head {
+        padding: 18px 16px 12px;
+        gap: 10px;
+      }
+      .items {
+        padding: 4px 12px 12px;
+      }
+      .item {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+        padding: 11px 4px;
+      }
+      .item-name {
+        align-items: flex-start;
+      }
+      .item-detail {
+        padding-left: 18px;
+        font-size: 12px;
+      }
+      .price {
+        font-size: 16px;
+      }
+      .bank-box {
+        margin: 0 16px 16px;
+        padding: 14px;
+      }
+      .bank-number {
+        flex-direction: row;
+        align-items: center;
+      }
+      .deposit-card {
+        flex-direction: row;
+        align-items: center;
+      }
+      .planning-card {
+        padding: 18px;
+      }
+      .closing-card p {
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+      .bank-number,
+      .deposit-card {
+        gap: 10px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -591,7 +884,7 @@
             <div class="bank-label">存入中信银行卡</div>
             <div class="bank-number">
               <span id="citic-card" class="masked-number">中信银行｜尾号 4528</span>
-              <button class="copy" data-copy="5224012000094528">复制完整卡号</button>
+              <button class="copy" data-copy="5224012000094528" aria-label="复制完整卡号" title="复制完整卡号">复制完整卡号</button>
             </div>
             <div class="privacy-hint">页面仅显示尾号，点击按钮复制完整卡号。</div>
           </div>
@@ -627,7 +920,7 @@
             <div class="bank-label">存入招商银行卡</div>
             <div class="bank-number">
               <span id="cmb-card" class="masked-number">招商银行｜尾号 0873</span>
-              <button class="copy" data-copy="6214835228570873">复制完整卡号</button>
+              <button class="copy" data-copy="6214835228570873" aria-label="复制完整卡号" title="复制完整卡号">复制完整卡号</button>
             </div>
             <div class="privacy-hint">页面仅显示尾号，点击按钮复制完整卡号。</div>
           </div>
@@ -666,33 +959,35 @@
                 <span>工商银行</span>
                 <strong class="masked-number">尾号 8524</strong>
               </div>
-              <button class="copy" data-copy="6222022308005838524">复制完整卡号</button>
+              <button class="copy" data-copy="6222022308005838524" aria-label="复制完整卡号" title="复制完整卡号">复制完整卡号</button>
             </div>
             <div class="deposit-card">
               <div>
                 <span>建设银行</span>
                 <strong class="masked-number">尾号 7879</strong>
               </div>
-              <button class="copy" data-copy="6217002000077037879">复制完整卡号</button>
+              <button class="copy" data-copy="6217002000077037879" aria-label="复制完整卡号" title="复制完整卡号">复制完整卡号</button>
             </div>
             <div class="deposit-card">
               <div>
                 <span>招商银行</span>
                 <strong class="masked-number">尾号 6727</strong>
               </div>
-              <button class="copy" data-copy="6214835219386727">复制完整卡号</button>
+              <button class="copy" data-copy="6214835219386727" aria-label="复制完整卡号" title="复制完整卡号">复制完整卡号</button>
             </div>
           </div>
         </section>
 
         <section class="section planning-card closing-card">
-          <p>把该留住的钱先留住，把该支付的账先付清。日子不是一下子变好的，是一次次认真安排之后，慢慢变稳的。</p>
+          <p>先把日子安放好，再把远方慢慢打开。</p>
         </section>
       </aside>
     </section>
 
     <div class="footer">下周七 · 每月固定支出档案 ·</div>
   </main>
+
+  <div id="toast" class="toast"></div>
 
   <script>
     const ACCESS_CODE = '7';
@@ -720,17 +1015,24 @@
       if (event.key === 'Enter') unlockPage();
     });
 
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+
     const buttons = document.querySelectorAll('.copy');
     buttons.forEach((btn) => {
       btn.addEventListener('click', async () => {
         const value = btn.dataset.copy;
         try {
           await navigator.clipboard.writeText(value);
-          const oldText = btn.textContent;
-          btn.textContent = '已复制';
-          setTimeout(() => btn.textContent = oldText, 1200);
+          showToast('已复制');
         } catch (e) {
-          alert('复制失败，请手动复制：' + value);
+          showToast('复制失败');
+          setTimeout(() => alert('复制失败，请手动复制：' + value), 160);
         }
       });
     });
